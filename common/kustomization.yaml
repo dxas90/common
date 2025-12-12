@@ -7,8 +7,8 @@ components:
   - ../components
 # remember to add the base resources to the cluster specific kustomization files
 resources:
-  - cert-manager
-  - dbms
+  # - cert-manager
+  # - dbms
   - external-secrets
   - istio-system
   - keda
