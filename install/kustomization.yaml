@@ -26,24 +26,6 @@ patches:
     target:
       kind: Deployment
       name: (kustomize-controller|helm-controller|source-controller|image-reflector-controller)
-  - # Increase the memory limits
-    patch: |
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: all
-      spec:
-        template:
-          spec:
-            containers:
-              - name: manager
-                resources:
-                  limits:
-                    memory: 512Mi
-                    cpu: 250m
-    target:
-      kind: Deployment
-      name: (kustomize-controller|helm-controller|source-controller|image-reflector-controller|image-automation-controller|notification-controller)
   - # Enable in-memory kustomize builds
     patch: |
       - op: add
@@ -94,14 +76,6 @@ patches:
     target:
       kind: Deployment
       name: helm-controller
-  - # Controller-level SOPS decryption
-    patch: |
-      - op: add
-        path: /spec/template/spec/containers/0/args/-
-        value: --sops-age-secret=sops-age
-    target:
-      kind: Deployment
-      name: kustomize-controller
   - # Watch configmaps and secrets attached to HelmReleases and Kustomizations
     patch: |-
       - op: add
